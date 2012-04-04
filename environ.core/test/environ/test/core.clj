@@ -3,4 +3,5 @@
         environ.core))
 
 (deftest test-env
-  (is (= (env "USER") (System/getenv "USER"))))
+  (is (= (:user env) (System/getenv "USER")))
+  (is (= (:java-arch env) (System/getenv "JAVA_ARCH"))))

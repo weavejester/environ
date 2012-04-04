@@ -1,4 +1,4 @@
-(defproject environ/environ.core "0.1.0-SNAPSHOT"
+(defproject environ/environ.core "0.1.0"
   :description "Core environ library for use in applications"
   :url "https://github.com/weavejester/environ"
   :dependencies [[org.clojure/clojure "1.2.1"]])

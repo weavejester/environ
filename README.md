@@ -3,22 +3,61 @@
 Environ is a Clojure library for managing environment settings from a
 number of different sources.
 
-In version 0.1.0, only one source has been implemented; environment
-variables. These are taken and converted into idiomatic Clojure
-keywords, lowercasing the names and converting "_" into "-".
+Currently, Environ supports two sources; environment variables, and
+the Leiningen project map.
+
 
 ## Installation
 
 Include the following dependency in your `project.clj` file:
 
-    [environ "0.1.0"]
+    :dependencies [[environ "0.2.0-SNAPSHOT"]]
+
+If you want to be able to draw settings from the Leiningen project
+map, you'll need the following plugin and hook:
+
+    :plugins [[environ/environ.lein "0.2.0-SNAPSHOT"]]
+    :hooks [environ.leiningen.hooks]
+
+A good place to put this is in your `~/.lein/profiles.clj` file.
+
 
 ## Usage
 
+Let's say you have an application that requires an AWS access key and
+secret key.
+
+You can use Leiningen's profiles to add this information to your
+development environment in your `~/.lein/profiles.clj` file, as it's
+likely you'll be using the same AWS account for all development:
+
+```clojure
+{:dev {:env {:aws-access-key "XXXXXXXXXXXXXXX"
+             :aws-secret-key "YYYYYYYYYYYYYYYYYYYYYY"}}}
+```
+
+In your application, you can access these values through the
+`environ.core/env` map:
+
 ```clojure
 (use 'environ.core)
-(prn (:pwd env))
+
+(def aws-creds
+  {:access-key (env :aws-access-key)
+   :secret-key (env :aws-secret-key)})
 ```
+
+When you deploy to a production environment, you can use standard
+environment variables to configure the same settings.
+
+```bash
+AWS_ACCESS_KEY=XXXXXXXXXXXXXXX
+AWS_SECRET_KEY=YYYYYYYYYYYYYYYYYYYYYY
+```
+
+Notice that the equivalent environment variables are uppercase, and
+the "-" character has been replaced with "_".
+
 
 ## License
 

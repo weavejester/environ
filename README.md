@@ -12,14 +12,14 @@ the Leiningen project map.
 Include the following dependency in your `project.clj` file:
 
 ```clojure
-:dependencies [[environ "0.2.0"]]
+:dependencies [[environ "0.2.1"]]
 ```
 
 If you want to be able to draw settings from the Leiningen project
 map, you'll need the following plugin and hook:
 
 ```clojure
-:plugins [[environ/environ.lein "0.2.0"]]
+:plugins [[environ/environ.lein "0.2.1"]]
 :hooks [environ.leiningen.hooks]
 ```
 

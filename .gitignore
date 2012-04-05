@@ -8,4 +8,4 @@ pom.xml
 .lein-deps-sum
 .lein-failures
 .lein-plugins
-.env.clj
+.lein-env

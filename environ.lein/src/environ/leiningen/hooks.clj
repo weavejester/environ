@@ -4,7 +4,7 @@
             leiningen.core.classpath))
 
 (defn env-file [project]
-  (io/file (:root project) ".env.clj"))
+  (io/file (:root project) ".lein-env"))
 
 (defn- write-env-to-file [func dep-key project & args]
   (spit (env-file project)

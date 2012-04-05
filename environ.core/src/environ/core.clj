@@ -13,7 +13,7 @@
        (into {})))
 
 (defn- read-env-file []
-  (let [env-file (io/file ".env.clj")]
+  (let [env-file (io/file ".lein-env")]
     (if (.exists env-file)
       (read-string (slurp env-file)))))
 

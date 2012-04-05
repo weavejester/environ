@@ -36,8 +36,8 @@ development environment in your `~/.lein/profiles.clj` file, as it's
 likely you'll be using the same AWS account for all development:
 
 ```clojure
-{:dev {:env {:aws-access-key "XXXXXXXXXXXXXXX"
-             :aws-secret-key "YYYYYYYYYYYYYYYYYYYYYY"}}}
+{:user {:env {:aws-access-key "XXXXXXXXXXXXXXX"
+              :aws-secret-key "YYYYYYYYYYYYYYYYYYYYYY"}}}
 ```
 
 In your application, you can access these values through the

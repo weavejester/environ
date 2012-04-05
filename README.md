@@ -51,6 +51,9 @@ In your application, you can access these values through the
    :secret-key (env :aws-secret-key)})
 ```
 
+You'll likely also want to add `.lein-env` to your `.gitignore` file
+(or the equivalent for your version control system).
+
 When you deploy to a production environment, you can use standard
 environment variables to configure the same settings.
 

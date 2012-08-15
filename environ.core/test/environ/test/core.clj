@@ -7,6 +7,6 @@
     (is (= (:user env) (System/getenv "USER")))
     (is (= (:java-arch env) (System/getenv "JAVA_ARCH"))))
   (testing "env file"
-    (spit ".env.clj" (prn-str {:foo "bar"}))
+    (spit ".lein-env" (prn-str {:foo "bar"}))
     (use 'environ.core :reload)
     (is (= (:foo env) "bar"))))

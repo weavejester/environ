@@ -5,10 +5,16 @@
 (defn- keywordize [s]
   (-> (str/lower-case s)
       (str/replace "_" "-")
+      (str/replace "." "-")
       (keyword)))
 
 (defn- read-system-env []
   (->> (System/getenv)
+       (map (fn [[k v]] [(keywordize k) v]))
+       (into {})))
+
+(defn- read-system-props []
+  (->> (System/getProperties)
        (map (fn [[k v]] [(keywordize k) v]))
        (into {})))
 
@@ -21,4 +27,5 @@
   env
   (merge
    (read-env-file)
+   (read-system-props)
    (read-system-env)))

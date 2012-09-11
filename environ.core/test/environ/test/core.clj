@@ -12,4 +12,8 @@
   (testing "env file"
     (spit ".lein-env" (prn-str {:foo "bar"}))
     (use 'environ.core :reload)
-    (is (= (:foo env) "bar"))))
+    (is (= (:foo env) "bar")))
+  (testing "env file with irregular keys"
+    (spit ".lein-env" (prn-str {:foo.bar "baz"}))
+    (use 'environ.core :reload)
+    (is (= (:foo-bar env) "baz"))))

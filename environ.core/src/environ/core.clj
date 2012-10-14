@@ -8,6 +8,11 @@
       (str/replace "." "-")
       (keyword)))
 
+(defn- sanitize [k]
+  (let [s (keywordize (name k))]
+    (if-not (= k s) (println "Warning: environ key " k " was has been corrected to " s))
+    s))
+
 (defn- read-system-env []
   (->> (System/getenv)
        (map (fn [[k v]] [(keywordize k) v]))
@@ -21,7 +26,8 @@
 (defn- read-env-file []
   (let [env-file (io/file ".lein-env")]
     (if (.exists env-file)
-      (read-string (slurp env-file)))))
+      (into {} (for [[k v] (read-string (slurp env-file))]
+                 [(sanitize k) v])))))
 
 (def ^{:doc "A map of environment variables."}
   env

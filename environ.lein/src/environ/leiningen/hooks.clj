@@ -1,7 +1,7 @@
 (ns environ.leiningen.hooks
   (:use [robert.hooke :only (add-hook)])
   (:require [clojure.java.io :as io]
-            leiningen.core.classpath))
+            leiningen.core.main))
 
 (defn env-file [project]
   (io/file (:root project) ".lein-env"))
@@ -12,5 +12,5 @@
   (apply func dep-key project args))
 
 (defn activate []
-  (add-hook #'leiningen.core.classpath/resolve-dependencies
+  (add-hook #'leiningen.core.main/apply-task
             write-env-to-file))

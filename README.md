@@ -3,8 +3,9 @@
 Environ is a Clojure library for managing environment settings from a
 number of different sources.
 
-Currently, Environ supports two sources; environment variables, and
-the Leiningen project map.
+Currently, Environ supports three sources; environment variables, Java
+system properties and the Leiningen project map using the lein-environ
+plugin.
 
 
 ## Installation
@@ -12,18 +13,17 @@ the Leiningen project map.
 Include the following dependency in your `project.clj` file:
 
 ```clojure
-:dependencies [[environ "0.3.1"]]
+:dependencies [[environ "0.4.0-SNAPSHOT"]]
 ```
 
 If you want to be able to draw settings from the Leiningen project
-map, you'll need the following plugin and hook:
+map, you'll also need the following plugin:
 
 ```clojure
-:plugins [[environ/environ.lein "0.3.1"]]
-:hooks [environ.leiningen.hooks]
+:plugins [[lein-environ "0.4.0-SNAPSHOT"]]
 ```
 
-A good place to put this is in your `~/.lein/profiles.clj` file.
+A good place to put this is in your `profiles.clj` file.
 
 
 ## Usage
@@ -65,9 +65,18 @@ AWS_SECRET_KEY=YYYYYYYYYYYYYYYYYYYYYY
 Notice that the equivalent environment variables are uppercase, and
 the "-" character has been replaced with "_".
 
+You can also use Java system properties:
+
+```
+java -jar app-standalone.jar -Daws.access.key=XX -Daws.secret.key=YY
+```
+
+Note in this case that the "-" character has been replace with ".",
+since this is the standard separator for system properties.
+
 
 ## License
 
-Copyright © 2012 James Reeves
+Copyright © 2013 James Reeves
 
 Distributed under the Eclipse Public License, the same as Clojure.

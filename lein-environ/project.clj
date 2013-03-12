@@ -1,4 +1,4 @@
-(defproject lein-environ "0.4.0-SNAPSHOT"
+(defproject lein-environ "0.4.0"
   :description "Leiningen plugin for Environ"
   :url "https://github.com/weavejester/environ"
   :license {:name "Eclipse Public License"

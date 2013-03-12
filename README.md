@@ -13,14 +13,14 @@ plugin.
 Include the following dependency in your `project.clj` file:
 
 ```clojure
-:dependencies [[environ "0.4.0-SNAPSHOT"]]
+:dependencies [[environ "0.4.0"]]
 ```
 
 If you want to be able to draw settings from the Leiningen project
 map, you'll also need the following plugin:
 
 ```clojure
-:plugins [[lein-environ "0.4.0-SNAPSHOT"]]
+:plugins [[lein-environ "0.4.0"]]
 ```
 
 A good place to put this is in your `profiles.clj` file.

@@ -51,6 +51,14 @@ In your application, you can access these values through the
    :secret-key (env :aws-secret-key)})
 ```
 
+It goes without saying that you can also define a default value, in
+case the environment variable was not set:
+
+```clojure
+(use 'environ.core)
+(env :port 8080)
+```
+
 You'll likely also want to add `.lein-env` to your `.gitignore` file
 (or the equivalent for your version control system).
 

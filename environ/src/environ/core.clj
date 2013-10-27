@@ -1,6 +1,5 @@
 (ns environ.core
-  (:require [clojure.string :as str]
-            [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io]))
 
 (defn- keywordize [s]
   (-> (str/lower-case s)
@@ -10,7 +9,7 @@
 
 (defn- sanitize [k]
   (let [s (keywordize (name k))]
-    (if-not (= k s) (println "Warning: environ key " k " was has been corrected to " s))
+    (when-not (= k s) (println "Warning: environ key " k " was has been corrected to " s))
     s))
 
 (defn- read-system-env []

@@ -17,3 +17,11 @@
     (spit ".lein-env" (prn-str {:foo.bar "baz"}))
     (use 'environ.core :reload)
     (is (= (:foo-bar env) "baz"))))
+
+(deftest test-env?
+  (testing "does exist"
+    (spit ".lein-env" (prn-str {:foo "bar"}))
+    (use 'environ.core :reload)
+    (is (= (env? :foo) true)))
+  (testing "does not exist"
+    (is (= (env? :qux) false))))

@@ -35,3 +35,6 @@
    (read-env-file)
    (read-system-props)
    (read-system-env)))
+
+(defn env? [k]
+  (not (str/blank? (env k))))

@@ -1,11 +1,19 @@
 # Environ
 
 Environ is a Clojure library for managing environment settings from a
-number of different sources.
+number of different sources. It works well for applications following
+the [12 Factor App](http://12factor.net/) pattern.
 
-Currently, Environ supports three sources; environment variables, Java
-system properties and the Leiningen project map using the lein-environ
-plugin.
+Currently, Environ supports three sources, resolved in the following
+order:
+
+1. A `.lein-env` file in the project directory
+2. Environment variables
+3. Java system properties
+
+The first source can be set via the "lein-environ" Leiningen plugin,
+which dumps the contents of the `:env` key in the project map into
+that files.
 
 
 ## Installation
@@ -22,8 +30,6 @@ map, you'll also need the following plugin:
 ```clojure
 :plugins [[lein-environ "0.4.0"]]
 ```
-
-A good place to put this is in your `profiles.clj` file.
 
 
 ## Usage
@@ -52,7 +58,8 @@ In your application, you can access these values through the
 ```
 
 You'll likely also want to add `.lein-env` to your `.gitignore` file
-(or the equivalent for your version control system).
+(or the equivalent for your version control system), if it isn't
+covered by an existing rule.
 
 When you deploy to a production environment, you can use standard
 environment variables to configure the same settings.
@@ -73,6 +80,8 @@ java -jar app-standalone.jar -Daws.access.key=XX -Daws.secret.key=YY
 
 Note in this case that the "-" character has been replace with ".",
 since this is the standard separator for system properties.
+
+These system properties will override any environment variables.
 
 
 ## License

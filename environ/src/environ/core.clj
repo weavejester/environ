@@ -33,5 +33,5 @@
   env
   (merge
    (read-env-file)
-   (read-system-props)
-   (read-system-env)))
+   (read-system-env)
+   (read-system-props)))

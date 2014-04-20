@@ -29,7 +29,7 @@
       (into {} (for [[k v] (read-string (slurp env-file))]
                  [(sanitize k) v])))))
 
-(def ^{:doc "A map of environment variables."}
+(defonce ^{:doc "A map of environment variables."}
   env
   (merge
    (read-env-file)

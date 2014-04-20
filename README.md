@@ -77,6 +77,6 @@ since this is the standard separator for system properties.
 
 ## License
 
-Copyright © 2013 James Reeves
+Copyright © 2014 James Reeves
 
 Distributed under the Eclipse Public License, the same as Clojure.

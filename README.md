@@ -75,7 +75,7 @@ the "-" character has been replaced with "_".
 You can also use Java system properties:
 
 ```
-java -jar app-standalone.jar -Daws.access.key=XX -Daws.secret.key=YY
+java -Daws.access.key=XX -Daws.secret.key=YY -jar app-standalone.jar
 ```
 
 Note in this case that the "-" character has been replace with ".",

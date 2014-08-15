@@ -76,9 +76,10 @@ Or use Java system properties:
 java -Ddatabase.url=jdbc:postgres://localhost/prod -jar standalone.jar
 ```
 
-Note that with environment variables, the "-" character is replaced
-with the more idiomatic "_" character. Similarly, with system
-properties, "-" is replaced with ".".
+Note that Environ automatically lowercases keys, and replaces the
+characters "_" and "." with "-". The environment variable
+`DATABASE_URL` and the system property `database.url` are therefore
+both converted to the same keyword `:database-url`.
 
 
 ## License

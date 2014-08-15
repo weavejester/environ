@@ -11,9 +11,9 @@ order:
 2. Environment variables
 3. Java system properties
 
-The first source can be set via the "lein-environ" Leiningen plugin,
+The first source is set via the "lein-environ" Leiningen plugin,
 which dumps the contents of the `:env` key in the project map into
-that files.
+that file.
 
 
 ## Installation
@@ -32,56 +32,53 @@ map, you'll also need the following plugin:
 ```
 
 
-## Usage
+## Example Usage
 
-Let's say you have an application that requires an AWS access key and
-secret key.
+Let's say you have an application that requires a database connection.
+Often you'll need three different databases, one for development, one
+for testing, and one for production.
 
-You can use Leiningen's profiles to add this information to your
-development environment in your `~/.lein/profiles.clj` file, as it's
-likely you'll be using the same AWS account for all development:
-
-```clojure
-{:user {:env {:aws-access-key "XXXXXXXXXXXXXXX"
-              :aws-secret-key "YYYYYYYYYYYYYYYYYYYYYY"}}}
-```
-
-In your application, you can access these values through the
-`environ.core/env` map:
+Lets pull the database connection details from the key `:database-url`
+on the `environ.core/env` map.
 
 ```clojure
-(use 'environ.core)
+(require '[environ.core :refer [env]])
 
-(def aws-creds
-  {:access-key (env :aws-access-key)
-   :secret-key (env :aws-secret-key)})
+(def database-url
+  (env :database-url))
 ```
 
-You'll likely also want to add `.lein-env` to your `.gitignore` file
-(or the equivalent for your version control system), if it isn't
-covered by an existing rule.
+The value of this key can be set in several different ways. The most
+common way during development is to use a local `profiles.clj` file in
+your project directory. This file contained a map that is merged with
+the standard `project.clj` file, but can be kept out of version
+control and reserved for local development options.
 
-When you deploy to a production environment, you can use standard
-environment variables to configure the same settings.
+```clojure
+{:dev  {:env {:database-url "jdbc:postgres://localhost/dev"}}
+ :test {:env {:database-url "jdbc:postgres://localhost/test"}}}
+```
+
+In this case we add a database URL for the dev and test environments.
+This means that if you run `lein repl`, the dev database will be used,
+and if you run `lein test`, the test database will be used.
+
+When you deploy to a production environment, you can make use of
+environment variables, like so:
 
 ```bash
-AWS_ACCESS_KEY=XXXXXXXXXXXXXXX
-AWS_SECRET_KEY=YYYYYYYYYYYYYYYYYYYYYY
+DATABASE_URL=jdbc:postgres://localhost/prod java -jar standalone.jar
 ```
 
-Notice that the equivalent environment variables are uppercase, and
-the "-" character has been replaced with "_".
+Or use Java system properties:
 
-You can also use Java system properties:
-
-```
-java -Daws.access.key=XX -Daws.secret.key=YY -jar app-standalone.jar
+```bash
+java -Ddatabase.url=jdbc:postgres://localhost/prod -jar standalone.jar
 ```
 
-Note in this case that the "-" character has been replace with ".",
-since this is the standard separator for system properties.
-
-These system properties will override any environment variables.
+Note that with environment variables, the "-" character is replaced
+with the more idiomatic "_" character. Similarly, with system
+properties, "-" is replaced with ".".
 
 
 ## License

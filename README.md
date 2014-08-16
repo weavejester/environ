@@ -21,14 +21,14 @@ that file.
 Include the following dependency in your `project.clj` file:
 
 ```clojure
-:dependencies [[environ "0.5.0"]]
+:dependencies [[environ "1.0.0"]]
 ```
 
 If you want to be able to draw settings from the Leiningen project
 map, you'll also need the following plugin:
 
 ```clojure
-:plugins [[lein-environ "0.5.0"]]
+:plugins [[lein-environ "1.0.0"]]
 ```
 
 

@@ -1,5 +1,5 @@
-(defproject environ "0.5.0"
-  :description "Core environ library for use in applications"
+(defproject environ "1.0.0"
+  :description "Library for accessing environment variables"
   :url "https://github.com/weavejester/environ"
   :scm {:dir ".."}
   :license {:name "Eclipse Public License"

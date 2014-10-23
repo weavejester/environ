@@ -29,9 +29,12 @@
       (into {} (for [[k v] (read-string (slurp env-file))]
                  [(sanitize k) v])))))
 
-(defonce ^{:doc "A map of environment variables."}
-  env
+(defn read-env []
   (merge
    (read-env-file)
    (read-system-env)
    (read-system-props)))
+
+(defonce ^{:doc "A map of environment variables."}
+  env
+  (read-env))

@@ -1,6 +1,6 @@
 (ns environ.test.core
-  (:use clojure.test)
-  (:require [environ.core :as e]))
+  (:require [clojure.test :refer :all]
+            [environ.core :as e]))
 
 (defn refresh-ns []
   (ns-unalias *ns* 'e)

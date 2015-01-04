@@ -1,4 +1,4 @@
-(ns environ.test.core
+(ns environ.core-test
   (:require [clojure.test :refer :all]
             [environ.core :as e]))
 

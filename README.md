@@ -50,9 +50,9 @@ on the `environ.core/env` map.
 
 The value of this key can be set in several different ways. The most
 common way during development is to use a local `profiles.clj` file in
-your project directory. This file contained a map that is merged with
+your project directory. This file contains a map that can be merged with
 the standard `project.clj` file, but can be kept out of version
-control and reserved for local development options.
+control and reserved for local development options. 
 
 ```clojure
 {:dev  {:env {:database-url "jdbc:postgres://localhost/dev"}}
@@ -62,6 +62,18 @@ control and reserved for local development options.
 In this case we add a database URL for the dev and test environments.
 This means that if you run `lein repl`, the dev database will be used,
 and if you run `lein test`, the test database will be used.
+
+So that profiles you define in `profiles.clj` are merged into, rather than
+replacing profiles defined in `project.clj`, a composite profile can be
+created in `project.clj`.
+
+```clojure
+:profiles {:dev-common {:dependencies [[midje "1.6.3]]}
+           :dev-overrides {} ; Only change this in ./profiles.clj
+           :dev [:dev-common :dev-overrides]}
+```
+
+Then use the :dev-overrides key in your `profiles.clj`.
 
 When you deploy to a production environment, you can make use of
 environment variables, like so:

@@ -37,4 +37,3 @@
     (spit ".lein-env" (prn-str {:foo.bar "baz"}))
     (let [env (refresh-env)]
       (is (= (:foo-bar env) "baz")))))
-(run-tests)

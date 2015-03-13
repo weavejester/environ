@@ -70,7 +70,7 @@ environment variables, like so:
 DATABASE_URL=jdbc:postgres://localhost/prod java -jar standalone.jar
 ```
 
-Or you can also use Java system properties:
+Or use Java system properties:
 
 ```bash
 java -Ddatabase.url=jdbc:postgres://localhost/prod -jar standalone.jar

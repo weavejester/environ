@@ -8,15 +8,16 @@
       (str/replace "." "-")
       (keyword)))
 
+(defn- pathize [s]
+  (map keywordize (str/split s #"__")))
+
 (defn- sanitize [k]
   (let [s (keywordize (name k))]
     (if-not (= k s) (println "Warning: environ key " k " has been corrected to " s))
     s))
 
 (defn- read-system-env []
-  (->> (System/getenv)
-       (map (fn [[k v]] [(keywordize k) v]))
-       (into {})))
+  (reduce (fn [m [k v]] (assoc-in m (pathize k) v)) {} (System/getenv)))
 
 (defn- read-system-props []
   (->> (System/getProperties)

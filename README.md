@@ -70,7 +70,7 @@ environment variables, like so:
 DATABASE_URL=jdbc:postgres://localhost/prod java -jar standalone.jar
 ```
 
-Or use Java system properties:
+Or you can also use Java system properties:
 
 ```bash
 java -Ddatabase.url=jdbc:postgres://localhost/prod -jar standalone.jar
@@ -81,6 +81,34 @@ characters "_" and "." with "-". The environment variable
 `DATABASE_URL` and the system property `database.url` are therefore
 both converted to the same keyword `:database-url`.
 
+## Nested Associations
+
+Leiningen profiles support arbitrarily nested associations. For instance, we might decide to store our database connection information in pieces instead of in fully assembled URLs.
+
+```clojure
+:dev {:env {:database
+  {:db "development" user: "dev"}}}
+:test {:env {:database
+  {:db "test" user: "tst"}}}
+```
+
+Applications can easily access these nested structures:
+
+```clojure
+(get-in env [:database :user])
+;; or
+(-> env :database :user)
+```
+
+If you need to set a nested association via an environment variable use two consecutive underscores for each nesting level:
+
+```bash
+DATABASE__DB=development
+DATABASE__USER=dev
+java -jar standalone.jar
+```
+
+There is no support for setting nested associations from Java system properties. You might like to contribute that feature!
 
 ## License
 

@@ -3,11 +3,12 @@
   (:require [clojure.java.io :as io]
             leiningen.core.main))
 
-(defn env-file [project]
-  (io/file (:root project) ".lein-env"))
+(defn env-file [path]
+  (io/file path ".lein-env"))
 
 (defn- write-env-to-file [func task-name project args]
-  (spit (env-file project) (prn-str (:env project {})))
+    (doseq [path (clojure.set/union #{(:root project)} (:also-write-to (:lein-environ project) []))]
+      (spit (env-file path) (prn-str (:env project {}))))
   (func task-name project args))
 
 (defn hooks []

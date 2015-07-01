@@ -31,6 +31,18 @@ map, you'll also need the following plugin:
 :plugins [[lein-environ "1.0.0"]]
 ```
 
+If you are using the Boot toolchain, you may want to read and write settings from build pipelines. In *build.boot*, require the dependency:
+
+```clojure
+:dependencies '[[boot-environ "1.0.0"]]
+```
+
+Then require the environ boot task.
+
+```clojure
+(require
+ '[environ.boot :refer [environ]])
+```
 
 ## Example Usage
 
@@ -62,6 +74,19 @@ control and reserved for local development options.
 In this case we add a database URL for the dev and test environments.
 This means that if you run `lein repl`, the dev database will be used,
 and if you run `lein test`, the test database will be used.
+
+In the case of Boot, you have the full flexibility of tasks and build pipelines,
+meaning that all the following are valid:
+
+```clojure
+$ boot environ -e database-url=jdbc:postgres://localhost/dev repl
+```
+
+```clojure
+(environ :env {:database-url "jdbc:postgres://localhost/dev")
+```
+
+The latter form can be included in custom pipelines and `task-options!'.
 
 When you deploy to a production environment, you can make use of
 environment variables, like so:

@@ -1,4 +1,4 @@
-(defproject boot-environ "1.0.0"
+(defproject boot-environ "1.0.0-RC1"
   :description "Boot task for Environ"
   :url "https://github.com/weavejester/environ"
   :scm {:dir ".."}

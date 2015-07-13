@@ -83,7 +83,7 @@ $ boot environ -e database-url=jdbc:postgres://localhost/dev repl
 ```
 
 ```clojure
-(environ :env {:database-url "jdbc:postgres://localhost/dev")
+(environ :env {:database-url "jdbc:postgres://localhost/dev"})
 ```
 
 The latter form can be included in custom pipelines and `task-options!'.

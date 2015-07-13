@@ -40,8 +40,7 @@ If you are using the Boot toolchain, you may want to read and write settings fro
 Then require the environ boot task.
 
 ```clojure
-(require
- '[environ.boot :refer [environ]])
+(require '[environ.boot :refer [environ]])
 ```
 
 ## Example Usage

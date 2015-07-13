@@ -3,7 +3,7 @@
   (:require [boot.core :as core]
             [environ.core :as environ]))
 
-(core/deftask environ [e env FOO=BAR {kw edn} "The environment map"]
+(core/deftask environ [e env FOO=BAR {kw str} "The environment map"]
   (fn [next-task]
     (fn [fileset]
       (with-redefs [environ/env (merge environ/env env)]

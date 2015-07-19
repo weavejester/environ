@@ -26,8 +26,15 @@
 (defn- read-env-file []
   (let [env-file (io/file ".lein-env")]
     (if (.exists env-file)
-      (into {} (for [[k v] (read-string (slurp env-file))]
-                 [(sanitize k) v])))))
+      (try
+        (let [inpstr (read-string (slurp env-file))]
+          (if (instance? clojure.lang.PersistentArrayMap inpstr)
+            (into {} (for [[k v] inpstr]
+                   [(sanitize k) v]))
+            (throw (java.lang.RuntimeException. "input is not a Clojure map"))))
+          (catch java.lang.RuntimeException e
+            (throw (java.lang.IllegalArgumentException. (clojure.core/str "Invalid format for .lein-env : " (.getMessage e)))))
+        ))))
 
 (defonce ^{:doc "A map of environment variables."}
   env

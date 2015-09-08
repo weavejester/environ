@@ -28,4 +28,7 @@
   (testing "env file with irregular keys"
     (spit ".lein-env" (prn-str {:foo.bar "baz"}))
     (let [env (refresh-env)]
-      (is (= (:foo-bar env) "baz")))))
+      (is (= (:foo-bar env) "baz"))))
+  (testing "env file with irregular keys"
+    (spit ".lein-env" "{:foo #=(str \"bar\" \"baz\")}")
+    (is (thrown? RuntimeException (refresh-env)))))

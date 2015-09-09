@@ -1,23 +1,26 @@
 (ns environ.core-test
   (:require [clojure.test :refer :all]
-            [environ.core :as e]))
+            [clojure.java.io :as io]))
 
 (defn refresh-ns []
-  (ns-unalias *ns* 'e)
   (remove-ns 'environ.core)
   (dosync (alter @#'clojure.core/*loaded-libs* disj 'environ.core))
-  (require '[environ.core :as e]))
+  (require 'environ.core))
 
 (defn refresh-env []
-  (eval `(do (refresh-ns) e/env)))
+  (refresh-ns)
+  (var-get (find-var 'environ.core/env)))
 
 (deftest test-env
+  (.delete (io/file ".lein-env"))
   (testing "env variables"
-    (is (= (:user e/env) (System/getenv "USER")))
-    (is (= (:java-arch e/env) (System/getenv "JAVA_ARCH"))))
+    (let [env (refresh-env)]
+      (is (= (:user env) (System/getenv "USER")))
+      (is (= (:java-arch env) (System/getenv "JAVA_ARCH")))))
   (testing "system properties"
-    (is (= (:user-name e/env) (System/getProperty "user.name")))
-    (is (= (:user-country e/env) (System/getProperty "user.country"))))
+    (let [env (refresh-env)]
+      (is (= (:user-name env) (System/getProperty "user.name")))
+      (is (= (:user-country env) (System/getProperty "user.country")))))
   (testing "env file"
     (spit ".lein-env" (prn-str {:foo "bar"}))
     (let [env (refresh-env)]

@@ -1,5 +1,6 @@
 (ns environ.core
-  (:require [clojure.string :as str]
+  (:require [clojure.edn :as edn]
+            [clojure.string :as str]
             [clojure.java.io :as io]))
 
 (defn- keywordize [s]
@@ -26,7 +27,7 @@
 (defn- read-env-file []
   (let [env-file (io/file ".lein-env")]
     (if (.exists env-file)
-      (into {} (for [[k v] (read-string (slurp env-file))]
+      (into {} (for [[k v] (edn/read-string (slurp env-file))]
                  [(sanitize k) v])))))
 
 (defonce ^{:doc "A map of environment variables."}

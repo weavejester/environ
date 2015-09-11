@@ -34,7 +34,7 @@ map, you'll also need the following plugin:
 If you are using the Boot toolchain, you may want to read and write settings from build pipelines. In *build.boot*, require the dependency:
 
 ```clojure
-:dependencies '[[boot-environ "1.0.0-RC1"]]
+:dependencies '[[boot-environ "1.0.0"]]
 ```
 
 Then require the environ boot task.

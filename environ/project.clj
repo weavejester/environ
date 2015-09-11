@@ -1,4 +1,4 @@
-(defproject environ "1.0.0"
+(defproject environ "1.0.1"
   :description "Library for accessing environment variables"
   :url "https://github.com/weavejester/environ"
   :scm {:dir ".."}

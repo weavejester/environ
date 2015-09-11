@@ -21,20 +21,20 @@ that file.
 Include the following dependency in your `project.clj` file:
 
 ```clojure
-:dependencies [[environ "1.0.0"]]
+:dependencies [[environ "1.0.1"]]
 ```
 
 If you want to be able to draw settings from the Leiningen project
 map, you'll also need the following plugin:
 
 ```clojure
-:plugins [[lein-environ "1.0.0"]]
+:plugins [[lein-environ "1.0.1"]]
 ```
 
 If you are using the Boot toolchain, you may want to read and write settings from build pipelines. In *build.boot*, require the dependency:
 
 ```clojure
-:dependencies '[[boot-environ "1.0.0"]]
+:dependencies '[[boot-environ "1.0.1"]]
 ```
 
 Then require the environ boot task.

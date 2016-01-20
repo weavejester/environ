@@ -24,8 +24,8 @@
        (map (fn [[k v]] [(keywordize k) v]))
        (into {})))
 
-(defn- read-env-file []
-  (let [env-file (io/file ".lein-env")]
+(defn- read-env-file [f]
+  (if-let [env-file (io/file f)]
     (if (.exists env-file)
       (into {} (for [[k v] (edn/read-string (slurp env-file))]
                  [(sanitize k) v])))))
@@ -33,6 +33,7 @@
 (defonce ^{:doc "A map of environment variables."}
   env
   (merge
-   (read-env-file)
+   (read-env-file ".lein-env")
+   (read-env-file (io/resource ".boot-env"))
    (read-system-env)
    (read-system-props)))

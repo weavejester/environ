@@ -87,6 +87,11 @@ $ boot environ -e database-url=jdbc:postgres://localhost/dev repl
 
 The latter form can be included in custom pipelines and `task-options!'.
 
+The task also creates or updates a `.boot-env` file in the fileset.
+This is useful for tasks that create their own pods like 
+[boot-test](https://github.com/adzerk-oss/boot-test), which won't
+see changes in the environ vars.
+
 When you deploy to a production environment, you can make use of
 environment variables, like so:
 

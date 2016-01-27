@@ -37,7 +37,8 @@ map, you'll also need the following plugin:
 :plugins [[lein-environ "1.0.1"]]
 ```
 
-If you are using the Boot toolchain, you may want to read and write settings from build pipelines. In *build.boot*, require the dependency:
+If you are using the Boot toolchain, you may want to read and write
+settings from build pipelines. In *build.boot*, add the dependency:
 
 ```clojure
 :dependencies '[[boot-environ "1.0.1"]]
@@ -49,7 +50,8 @@ Then require the environ boot task.
 (require '[environ.boot :refer [environ]])
 ```
 
-## Example Usage
+
+## Usage
 
 Let's say you have an application that requires a database connection.
 Often you'll need three different databases, one for development, one
@@ -80,8 +82,8 @@ In this case we add a database URL for the dev and test environments.
 This means that if you run `lein repl`, the dev database will be used,
 and if you run `lein test`, the test database will be used.
 
-In the case of Boot, you have the full flexibility of tasks and build pipelines,
-meaning that all the following are valid:
+In the case of Boot, you have the full flexibility of tasks and build
+pipelines, meaning that all the following are valid:
 
 ```clojure
 $ boot environ -e database-url=jdbc:postgres://localhost/dev repl

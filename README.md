@@ -4,16 +4,22 @@ Environ is a Clojure library for managing environment settings from a
 number of different sources. It works well for applications following
 the [12 Factor App](http://12factor.net/) pattern.
 
-Currently, Environ supports three sources, resolved in the following
+Currently, Environ supports four sources, resolved in the following
 order:
 
 1. A `.lein-env` file in the project directory
-2. Environment variables
-3. Java system properties
+2. A `.boot-env` file on the classpath
+3. Environment variables
+4. Java system properties
 
-The first source is set via the "lein-environ" Leiningen plugin,
-which dumps the contents of the `:env` key in the project map into
-that file.
+The first two sources are set by the lein-environ and boot-environ
+plugins respectively, and should not be edited manually.
+
+The `.lein-env` file is populated with the content of the `:env` key
+in the Leiningen project map.
+
+The `.boot-env` file is populated by the `environ.boot/environ` Boot
+task.
 
 
 ## Installation

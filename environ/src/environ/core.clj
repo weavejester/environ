@@ -11,7 +11,7 @@
 
 (defn- sanitize-key [k]
   (let [s (keywordize (name k))]
-    (if-not (= k s) (println "Warning: environ key " k " has been corrected to " s))
+    (if-not (= k s) (println "Warning: environ key" k "has been corrected to" s))
     s))
 
 (defn- sanitize-val [v]

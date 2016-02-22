@@ -7,13 +7,20 @@
 
 (def ^:const env-file ".boot-env")
 
+(defn- as-edn [& args]
+  (binding [*print-dup*    false
+            *print-meta*   false
+            *print-length* false
+            *print-level*  false]
+    (apply prn-str args)))
+
 (defn- read-boot-env [fileset]
   (if-let [t (core/tmp-get fileset env-file)]
     (-> t core/tmp-file slurp edn/read-string)
     {}))
 
 (defn- write-boot-env [env tmp]
-  (spit (io/file tmp env-file) (prn-str env)))
+  (spit (io/file tmp env-file) (as-edn env)))
 
 (defn- update-boot-env
   [fileset tmp-dir env]

@@ -14,10 +14,10 @@
     (if-not (= k s) (println "Warning: environ key" k "has been corrected to" s))
     s))
 
-(defn- sanitize-val [v]
+(defn- sanitize-val [k v]
   (if (string? v)
     v
-    (do (println "Warning: environ value" (pr-str v) "has been cast to string")
+    (do (println "Warning: environ value" (pr-str v) "for key" k "has been cast to string")
         (str v))))
 
 (defn- read-system-env []
@@ -34,7 +34,7 @@
   (if-let [env-file (io/file f)]
     (if (.exists env-file)
       (into {} (for [[k v] (edn/read-string (slurp env-file))]
-                 [(sanitize-key k) (sanitize-val v)])))))
+                 [(sanitize-key k) (sanitize-val k v)])))))
 
 (defonce ^{:doc "A map of environment variables."}
   env

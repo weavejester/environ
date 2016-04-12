@@ -1,21 +1,39 @@
 (ns lein-environ.plugin
   (:use [robert.hooke :only (add-hook)])
-  (:require [clojure.java.io :as io]
-            leiningen.core.main))
+  (:require leiningen.core.main
+            leiningen.core.eval
+            [clojure.string :as str]))
 
-(defn- as-edn [& args]
-  (binding [*print-dup*    false
-            *print-meta*   false
-            *print-length* false
-            *print-level*  false]
-    (apply prn-str args)))
+(def last-env (atom nil))
 
-(defn env-file [project]
-  (io/file (:root project) ".lein-env"))
+(defn- reverse-keywordize [s]
+  (-> (name s)
+      (str/upper-case)
+      (str/replace "-" "_")))
 
-(defn- write-env-to-file [func task-name project args]
-  (spit (env-file project) (as-edn (:env project {})))
+(defn- generate-variable-setup-code [[key value]]
+  `(System/setProperty ~key ~value))
+
+(defn- generate-env-setup-code [env]
+  (map generate-variable-setup-code env))
+
+(defn- safe-env [env]
+  (into {} (map (fn [[key value]] [(reverse-keywordize key) value]) env)))
+
+(defn- setup-env! [func project form]
+  ; we cannot use project here to retrieve :env because it has been already filtered out prior to passing to shell-command
+  (let [env (safe-env @last-env)
+        form-with-env-setup `(do
+                               ~@(generate-env-setup-code env)
+                               ~form)]
+    (func project form-with-env-setup)))
+
+(defn- capture-env! [func task-name project args]
+  ; apply-task is a suitable place where we can capture full project information (with merged profiles)
+  ; we capture collected :env map here for later use when spawning a java compiltion via shell-command
+  (reset! last-env (:env project))
   (func task-name project args))
 
 (defn hooks []
-  (add-hook #'leiningen.core.main/apply-task #'write-env-to-file))
+  (add-hook #'leiningen.core.main/apply-task #'capture-env!)
+  (add-hook #'leiningen.core.eval/shell-command #'setup-env!))

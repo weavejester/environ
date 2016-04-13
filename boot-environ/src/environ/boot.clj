@@ -35,5 +35,5 @@
     (fn environ-middleware [next-task]
       (fn environ-handler [fileset]
         (core/empty-dir! tmp)
-        (with-redefs [environ/env (merge environ/env env)]
+        (with-redefs [environ/env (environ/EnvironMap. (merge (.basic-map environ/env) env) (.ctx environ/env))]
           (next-task (update-boot-env fileset tmp env)))))))

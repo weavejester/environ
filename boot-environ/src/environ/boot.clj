@@ -24,9 +24,9 @@
 
 (defn- update-boot-env
   [fileset tmp-dir env]
-  (doto fileset
-    (-> (read-boot-env) (merge env) (write-boot-env tmp-dir))
-    (-> (core/add-source tmp-dir) (core/commit!))))
+  (do
+    (-> fileset (read-boot-env) (merge env) (write-boot-env tmp-dir))
+    (-> fileset (core/add-source tmp-dir) (core/commit!))))
 
 (core/deftask environ
   "Adds key-value pairs to the environment picked up by environ."

@@ -43,3 +43,10 @@
    (read-env-file (io/resource ".boot-env"))
    (read-system-env)
    (read-system-props)))
+
+(defn override!
+  "Modify the environment. Intended to be used only from the REPL during
+  developement."
+  [k v]
+  (let [k (sanitize-key k)]
+    (def env (assoc env k (sanitize-val k v)))))

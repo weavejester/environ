@@ -118,6 +118,16 @@ characters "_" and "." with "-". The environment variable
 `DATABASE_URL` and the system property `database.url` are therefore
 both converted to the same keyword `:database-url`.
 
+The `override!` function modifies the environment. It is not
+recommended in production, but can be convenient when testing code in
+the REPL during development:
+
+```clojure
+(require '[environ.core :as environ :refer [env]])
+
+(environ/override! :database-url "jdbc:postgres://localhost/dev")
+```
+
 
 ## License
 

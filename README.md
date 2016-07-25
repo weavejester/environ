@@ -16,7 +16,15 @@ The first two sources are set by the lein-environ and boot-environ
 plugins respectively, and should not be edited manually.
 
 The `.lein-env` file is populated with the content of the `:env` key
-in the Leiningen project map.
+in the Leiningen project map. Keywords with a `project` namespace are
+looked up in the project map. For example:
+
+```clojure
+{:env {:app-version :project/version}}
+```
+
+This looks up the `:version` key in the Leiningen project map. You can view
+the full project map by using [lein-pprint](https://github.com/technomancy/leiningen/tree/master/lein-pprint).
 
 The `.boot-env` file is populated by the `environ.boot/environ` Boot
 task.
@@ -96,7 +104,7 @@ $ boot environ -e database-url=jdbc:postgres://localhost/dev repl
 The latter form can be included in custom pipelines and `task-options!'.
 
 The task also creates or updates a `.boot-env` file in the fileset.
-This is useful for tasks that create their own pods like 
+This is useful for tasks that create their own pods like
 [boot-test](https://github.com/adzerk-oss/boot-test), which won't
 see changes in the environ vars.
 

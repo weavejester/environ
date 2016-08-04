@@ -16,18 +16,8 @@ The first two sources are set by the lein-environ and boot-environ
 plugins respectively, and should not be edited manually.
 
 The `.lein-env` file is populated with the content of the `:env` key
-in the Leiningen project map. Keywords with a `project` namespace are
-looked up in the project map. For example:
-
-```clojure
-{:env {:app-version :project/version}}
-```
-
-This looks up the `:version` key in the Leiningen project map. You can view
-the full project map by using [lein-pprint](https://github.com/technomancy/leiningen/tree/master/lein-pprint).
-
-The `.boot-env` file is populated by the `environ.boot/environ` Boot
-task.
+in the Leiningen project map. The `.boot-env` file is populated by the
+`environ.boot/environ` Boot task.
 
 
 ## Installation
@@ -90,6 +80,16 @@ In this case we add a database URL for the dev and test environments.
 This means that if you run `lein repl`, the dev database will be used,
 and if you run `lein test`, the test database will be used.
 
+Keywords with a `project` namespace are looked up in the project
+map. For example:
+
+```clojure
+{:env {:app-version :project/version}}
+```
+
+This looks up the `:version` key in the Leiningen project map. You can
+view the full project map by using [lein-pprint][].
+
 In the case of Boot, you have the full flexibility of tasks and build
 pipelines, meaning that all the following are valid:
 
@@ -105,8 +105,7 @@ The latter form can be included in custom pipelines and `task-options!'.
 
 The task also creates or updates a `.boot-env` file in the fileset.
 This is useful for tasks that create their own pods like
-[boot-test](https://github.com/adzerk-oss/boot-test), which won't
-see changes in the environ vars.
+[boot-test][], which won't see changes in the environ vars.
 
 When you deploy to a production environment, you can make use of
 environment variables, like so:
@@ -125,6 +124,9 @@ Note that Environ automatically lowercases keys, and replaces the
 characters "_" and "." with "-". The environment variable
 `DATABASE_URL` and the system property `database.url` are therefore
 both converted to the same keyword `:database-url`.
+
+[lein-pprint]: https://github.com/technomancy/leiningen/tree/master/lein-pprint
+[boot-test]:   https://github.com/adzerk-oss/boot-test
 
 
 ## License

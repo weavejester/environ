@@ -1,4 +1,8 @@
-## 1.0.3 (2016-05--06)
+## 1.1.0 (2016-08-04)
+
+* Replace `:project/foo` keywords with the value of `:foo` key in project map
+
+## 1.0.3 (2016-05-06)
 
 * Fix boot-environ to return updated fileset
 * Print key when santizing value for easier debugging

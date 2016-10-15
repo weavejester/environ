@@ -72,8 +72,8 @@ the standard `project.clj` file, but can be kept out of version
 control and reserved for local development options.
 
 ```clojure
-{:dev  {:env {:database-url "jdbc:postgres://localhost/dev"}}
- :test {:env {:database-url "jdbc:postgres://localhost/test"}}}
+{:dev  {:env {:database-url "jdbc:postgresql://localhost/dev"}}
+ :test {:env {:database-url "jdbc:postgresql://localhost/test"}}}
 ```
 
 In this case we add a database URL for the dev and test environments.
@@ -94,11 +94,11 @@ In the case of Boot, you have the full flexibility of tasks and build
 pipelines, meaning that all the following are valid:
 
 ```clojure
-$ boot environ -e database-url=jdbc:postgres://localhost/dev repl
+$ boot environ -e database-url=jdbc:postgresql://localhost/dev repl
 ```
 
 ```clojure
-(environ :env {:database-url "jdbc:postgres://localhost/dev"})
+(environ :env {:database-url "jdbc:postgresql://localhost/dev"})
 ```
 
 The latter form can be included in custom pipelines and `task-options!'.
@@ -111,13 +111,13 @@ When you deploy to a production environment, you can make use of
 environment variables, like so:
 
 ```bash
-DATABASE_URL=jdbc:postgres://localhost/prod java -jar standalone.jar
+DATABASE_URL=jdbc:postgresql://localhost/prod java -jar standalone.jar
 ```
 
 Or use Java system properties:
 
 ```bash
-java -Ddatabase.url=jdbc:postgres://localhost/prod -jar standalone.jar
+java -Ddatabase.url=jdbc:postgresql://localhost/prod -jar standalone.jar
 ```
 
 Note that Environ automatically lowercases keys, and replaces the

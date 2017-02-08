@@ -36,10 +36,13 @@
       (into {} (for [[k v] (edn/read-string (slurp env-file))]
                  [(sanitize-key k) (sanitize-val k v)])))))
 
-(defonce ^{:doc "A map of environment variables."}
-  env
+(defn read-env []
   (merge
    (read-env-file ".lein-env")
    (read-env-file (io/resource ".boot-env"))
    (read-system-env)
    (read-system-props)))
+
+(defonce ^{:doc "A map of environment variables."}
+  env
+  (read-env))

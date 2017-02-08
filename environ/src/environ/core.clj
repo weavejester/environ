@@ -40,6 +40,7 @@
   env
   (merge
    (read-env-file ".lein-env")
+   (read-env-file ".lein-docker-env")
    (read-env-file (io/resource ".boot-env"))
    (read-system-env)
    (read-system-props)))

@@ -39,7 +39,7 @@
 (defonce ^{:doc "A map of environment variables."}
   env
   (merge
-   (read-env-file ".lein-env")
-   (read-env-file (io/resource ".boot-env"))
+   (read-system-props)
    (read-system-env)
-   (read-system-props)))
+   (read-env-file (io/resource ".boot-env"))
+   (read-env-file ".lein-env")))

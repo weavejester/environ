@@ -36,9 +36,20 @@
       (into {} (for [[k v] (edn/read-string (slurp env-file))]
                  [(sanitize-key k) (sanitize-val k v)])))))
 
+(defn- warn-on-overwrite [ms]
+  (doseq [[k kvs] (group-by key (apply concat ms))
+          :let  [vs (map val kvs)]
+          :when (and (next kvs) (not= (first vs) (last vs)))]
+    (println "Warning: environ value" (first vs) "for key" k
+             "has been overwritten with" (last vs))))
+
+(defn- merge-env [& ms]
+  (warn-on-overwrite ms)
+  (apply merge ms))
+
 (defonce ^{:doc "A map of environment variables."}
   env
-  (merge
+  (merge-env
    (read-env-file ".lein-env")
    (read-env-file (io/resource ".boot-env"))
    (read-system-env)

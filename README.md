@@ -29,7 +29,7 @@ Include the following dependency in your `project.clj` file:
 ```
 
 If you want to be able to draw settings from the Leiningen project
-map, you'll also need the following plugin:
+map `project.clj` or `profiles.clj`, you'll also need the following plugin:
 
 ```clojure
 :plugins [[lein-environ "1.1.0"]]

@@ -30,12 +30,21 @@
        (map (fn [[k v]] [(keywordize k) v]))
        (into {})))
 
+(defn- read-env-reader [r]
+  (when-let [reader (io/reader r)]
+    (into {}
+          (for [[k v] (edn/read-string (slurp r))]
+            [(sanitize-key k) (sanitize-val k v)]))))
+
 (defn- read-env-file [f]
   (if-let [env-file (io/file f)]
     (if (.exists env-file)
-      (into {} (for [[k v] (edn/read-string (slurp env-file))]
-                 [(sanitize-key k) (sanitize-val k v)])))))
+      (read-env-reader env-file))))
 
+(defn- read-env-resource [r]
+  (when-let [resource (io/resource r)]
+    (read-env-reader resource)))
+                      
 (defn- warn-on-overwrite [ms]
   (doseq [[k kvs] (group-by key (apply concat ms))
           :let  [vs (map val kvs)]
@@ -51,6 +60,6 @@
   env
   (merge-env
    (read-env-file ".lein-env")
-   (read-env-file (io/resource ".boot-env"))
+   (read-env-resource ".boot-env")
    (read-system-env)
    (read-system-props)))

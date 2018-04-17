@@ -36,4 +36,9 @@
     (spit ".lein-env" (prn-str {:foo 1 :bar :baz}))
     (let [env (refresh-env)]
       (is (= (:foo env) "1"))
-      (is (= (:bar env) ":baz")))))
+      (is (= (:bar env) ":baz"))))
+  (testing "boot-env file in classpath (from test-resources)"
+    (spit ".boot-env" (prn-str {:boot-env "1"}))
+    (let [env (refresh-env)]
+      (is (= (:boot env) "hobnail"))))
+  )

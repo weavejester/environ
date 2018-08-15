@@ -11,7 +11,7 @@
 
 (defn- sanitize-key [k]
   (let [s (keywordize (name k))]
-    (if-not (= k s) (println "Warning: environ key" k "has been corrected to" s))
+    (when-not (= k s) (println "Warning: environ key" k "has been corrected to" s))
     s))
 
 (defn- sanitize-val [k v]
@@ -31,8 +31,8 @@
        (into {})))
 
 (defn- read-env-file [f]
-  (if-let [env-file (io/file f)]
-    (if (.exists env-file)
+  (when-let [env-file (io/file f)]
+    (when (.exists env-file)
       (into {} (for [[k v] (edn/read-string (slurp env-file))]
                  [(sanitize-key k) (sanitize-val k v)])))))
 

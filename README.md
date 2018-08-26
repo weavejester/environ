@@ -146,6 +146,10 @@ both converted to the same keyword `:database-url`.
 [lein-pprint]: https://github.com/technomancy/leiningen/tree/master/lein-pprint
 [boot-test]:   https://github.com/adzerk-oss/boot-test
 
+*Important* -- environ will not pick up configuration settings from the 
+`project.clj` when called from a compiled uberjar. So for any compiled 
+code you produce with `lein uberjar`, you will want to set your 
+configuration values via shell environment and/or system properties.
 
 ## License
 

@@ -7,3 +7,5 @@ pom.xml.asc
 *.class
 .lein-*
 .nrepl-port
+environ/.cljs_node_repl
+environ/out/

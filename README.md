@@ -153,6 +153,6 @@ configuration values via shell environment and/or system properties.
 
 ## License
 
-Copyright © 2016 James Reeves
+Copyright © 2020 James Reeves
 
 Distributed under the Eclipse Public License, the same as Clojure.

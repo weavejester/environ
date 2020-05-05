@@ -1,4 +1,4 @@
-(defproject lein-environ "1.1.0"
+(defproject lein-environ "1.2.0"
   :description "Leiningen plugin for Environ"
   :url "https://github.com/weavejester/environ"
   :scm {:dir ".."}

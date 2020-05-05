@@ -1,3 +1,7 @@
+## 1.2.0 (2020-05-05)
+
+* Add support for ClojureScript on node.js (#87)
+
 ## 1.1.0 (2016-08-04)
 
 * Replace `:project/foo` keywords with the value of `:foo` key in project map

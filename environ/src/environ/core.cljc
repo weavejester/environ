@@ -46,8 +46,8 @@
   #?(:clj (when-let [f (io/file f)]
             (when (.exists f)
               (slurp f)))
-     :cljs (when (.existsSync fs f)
-             (str (.readFileSync fs f)))))
+     :cljs (when ^js (.existsSync fs f)
+             (str ^js (.readFileSync fs f)))))
 
 (defn- read-env-file [f]
   (when-let [content (slurp-file f)]

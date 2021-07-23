@@ -151,6 +151,10 @@ both converted to the same keyword `:database-url`.
 code you produce with `lein uberjar`, you will want to set your 
 configuration values via shell environment and/or system properties.
 
+## Demo Project
+
+A small demo project of the above example can be [found here](https://github.com/io-tupelo-demo/environ).
+
 ## License
 
 Copyright © 2020 James Reeves

@@ -77,5 +77,8 @@
               (read-system-env))
              {})))
 
-(defonce ^{:doc "A map of environment variables."}
+(defonce ^{:doc "A map of environment variables at compile time."}
   env (read-env))
+
+(def ^{:doc "A ref to a map of environment variables at runtime."}
+  runtime-env (delay (read-env)))

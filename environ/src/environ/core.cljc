@@ -13,6 +13,10 @@
 #?(:cljs (def ^:private process
            (when nodejs? (js/require "process"))))
 
+(defn- printerr [& more]
+  (binding [*out* *err*]
+    (apply println more)))
+
 (defn- keywordize [s]
   (-> (str/lower-case s)
       (str/replace "_" "-")
@@ -21,13 +25,13 @@
 
 (defn- sanitize-key [k]
   (let [s (keywordize (name k))]
-    (if-not (= k s) (println "Warning: environ key" k "has been corrected to" s))
+    (if-not (= k s) (printerr "Warning: environ key" k "has been corrected to" s))
     s))
 
 (defn- sanitize-val [k v]
   (if (string? v)
     v
-    (do (println "Warning: environ value" (pr-str v) "for key" k "has been cast to string")
+    (do (printerr "Warning: environ value" (pr-str v) "for key" k "has been cast to string")
         (str v))))
 
 (defn- read-system-env []
@@ -58,8 +62,8 @@
   (doseq [[k kvs] (group-by key (apply concat ms))
           :let  [vs (map val kvs)]
           :when (and (next kvs) (not= (first vs) (last vs)))]
-    (println "Warning: environ value" (first vs) "for key" k
-             "has been overwritten with" (last vs))))
+    (printerr "Warning: environ value" (first vs) "for key" k
+              "has been overwritten with" (last vs))))
 
 (defn- merge-env [& ms]
   (warn-on-overwrite ms)
